@@ -4,6 +4,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 
 from .forms import RegistrationForm
+from . import permissions
+
 
 def login_view(request):
     """View for Login User"""
@@ -11,26 +13,25 @@ def login_view(request):
     if request.user.is_authenticated:
         return redirect('index')
 
-
     if request.method == 'POST':
 
-            username = request.POST['username']
-            password = request.POST['password']
+        username = request.POST['username']
+        password = request.POST['password']
 
-            user = authenticate(username=username, password=password)
+        user = authenticate(username=username, password=password)
 
-            if user is not None:
-                login(request, user)
-                messages.info(request, f"Iniciaste sesión como {username}")
-                return redirect('index')
-            
-            else:
-                print("Usuario es None")
-                login_form = AuthenticationForm()
-                messages.error(request, "Usuario o contraseña erróneo")
-                context = {}
-                context['form'] = login_form
-                return render(request, 'login.html', context)
+        if user is not None:
+            login(request, user)
+            messages.info(request, f"Iniciaste sesión como {username}")
+            return redirect('index')
+
+        else:
+            print("Usuario es None")
+            login_form = AuthenticationForm()
+            messages.error(request, "Usuario o contraseña erróneo")
+            context = {}
+            context['form'] = login_form
+            return render(request, 'login.html', context)
 
     else:
         login_form = AuthenticationForm()
@@ -58,17 +59,24 @@ def register_view(request):
             user = form.save()
 
             username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
+            password = form.cleaned_data['password1']
+            is_super_administrator = form.cleaned_data['is_super_administrator']
+
+            print(is_super_administrator)
 
             user = authenticate(username=username, password=password)
-
+#
+            if is_super_administrator:
+                permissions.set_user_as_super_administrator(user)
+#
             login(request, user)
             messages.success(request, "Registro exitoso")
-
+#
             return redirect("index")
-        
+
         messages.error(request, "Error en registro. Información inválida")
-    
+        return redirect('register')
+
     else:
         form = RegistrationForm()
 
