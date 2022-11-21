@@ -3,6 +3,8 @@
 {% block main_content %}
     <h1>Customer List</h1>
 
+    <a href="{% url 'create-customer' %}">Crear Cliente</a>
+
     {% if customer_list %}
         <ul>
             {% for customer in customer_list %}
