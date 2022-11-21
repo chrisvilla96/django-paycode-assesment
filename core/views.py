@@ -1,6 +1,8 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views.generic import ListView, TemplateView
 from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView
+from django.urls import reverse
 
 from .models import Customer, PaymentsCustomer
 
@@ -32,3 +34,14 @@ class CustomerDetailView(LoginRequiredMixin, DetailView):
         customer_id = self.kwargs['pk']
         context["payments"] = Customer.objects.get(pk=customer_id).paymentscustomer_set.all()
         return context
+
+
+class CustomerCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    """Viewfor creating Customers"""
+
+    permission_required = 'core.add_customer'
+
+    template_name = 'customer-create.html'
+    model = Customer
+    fields = ['name', 'paternal_surname', 'email']
+    success_url = '/index/'
