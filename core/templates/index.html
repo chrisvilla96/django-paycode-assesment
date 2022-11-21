@@ -6,7 +6,9 @@
     {% if customer_list %}
         <ul>
             {% for customer in customer_list %}
-            <li>{{ customer }}</li>
+            <li>
+                <a href="{% url 'customer-detail' customer.id %}">{{ customer }}</a>
+            </li>
             {% endfor %}
         </ul>
     {% else %}

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block main_content %}
+
+    <h1>{{ object.name }}</h1>
+    <h1>{{ object.paternal_surname }}</h1>
+
+    {% if payments %}
+        {% for payment in payments %}
+            <p>{{ payment.product_name }}</p>
+        {% endfor %}
+    {% else %}
+        <h1>No hay pagos</h1>
+    {% endif %}
+
+{% endblock %}
