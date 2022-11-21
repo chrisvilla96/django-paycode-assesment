@@ -42,7 +42,7 @@ class PaymentsCustomer(models.Model):
         ]
 
 
-def create_dummy_payments(sender, instance, **kwargs):
+def create_dummy_payments_signal(sender, instance, **kwargs):
     payments_count = random.randint(1, 9)
     customer = instance
 
@@ -57,4 +57,5 @@ def create_dummy_payments(sender, instance, **kwargs):
             customer=customer
         )
 
-post_save.connect(create_dummy_payments, sender=Customer)
+
+post_save.connect(create_dummy_payments_signal, sender=Customer)
