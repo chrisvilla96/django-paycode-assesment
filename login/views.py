@@ -38,4 +38,8 @@ def login_view(request):
         context['form'] = login_form
         return render(request, 'login.html', context)
 
-# Create your views here.
+
+def logout_view(request):
+    logout(request)
+    return redirect('home')
+
