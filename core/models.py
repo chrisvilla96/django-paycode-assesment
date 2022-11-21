@@ -10,6 +10,9 @@ class Customer(models.Model):
     paternal_surname = models.CharField(max_length=50)
     email = models.EmailField(max_length=255)
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         permissions = [
             ('can_add_customer', 'can add customer'),
@@ -26,6 +29,9 @@ class PaymentsCustomer(models.Model):
     product_name = models.CharField(max_length=100)
     quantity = models.IntegerField()
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.product_name
 
     class Meta:
         permissions = [
