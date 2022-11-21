@@ -1,7 +1,14 @@
-from django.views.generic import ListView
+from django.views.generic import ListView, TemplateView
 from django.views.generic.detail import DetailView
 
 from .models import Customer, PaymentsCustomer
+
+
+class HomeView(TemplateView):
+    """View for Home"""
+
+    template_name = 'home.html'
+
 
 class IndexView(ListView):
     """View for index"""

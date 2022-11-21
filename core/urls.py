@@ -1,8 +1,9 @@
 from django.urls import path
 
-from .views import IndexView, CustomerDetailView
+from .views import HomeView, IndexView, CustomerDetailView
 
 urlpatterns = [
-    path('', IndexView.as_view(), name='index'),
+    path('', HomeView.as_view(), name='home'),
+    path('index/', IndexView.as_view(), name='index'),
     path('customer/<uuid:pk>', CustomerDetailView.as_view(), name='customer-detail'),
 ]
