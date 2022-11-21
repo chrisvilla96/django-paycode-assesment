@@ -43,3 +43,35 @@ def logout_view(request):
     logout(request)
     return redirect('home')
 
+
+def register_view(request):
+    """View for Login User"""
+
+    if request.user.is_authenticated:
+        return redirect('index')
+
+    if request.method == "POST":
+
+        form = RegistrationForm(request.POST)
+
+        if form.is_valid():
+            user = form.save()
+
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+
+            user = authenticate(username=username, password=password)
+
+            login(request, user)
+            messages.success(request, "Registro exitoso")
+
+            return redirect("index")
+        
+        messages.error(request, "Error en registro. Información inválida")
+    
+    else:
+        form = RegistrationForm()
+
+        context = {}
+        context['form'] = form
+        return render(request, 'register.html', context)
