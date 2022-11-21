@@ -1,5 +1,7 @@
+import random
 import uuid
 from django.db import models
+from django.db.models.signals import post_save
 
 
 class Customer(models.Model):
@@ -38,3 +40,21 @@ class PaymentsCustomer(models.Model):
             ('can_edit_payment', 'can edit payment propperties'),
             ('can_delete_payment', 'can delete payment'),
         ]
+
+
+def create_dummy_payments(sender, instance, **kwargs):
+    payments_count = random.randint(1, 9)
+    customer = instance
+
+    for payment in range(0, payments_count):
+        random_amount = random.randint(20, 5000)
+        random_quantity = random.randint(1,20)
+
+        PaymentsCustomer.objects.create(
+            product_name=payment,
+            amount=random_amount,
+            quantity=random_quantity,
+            customer=customer
+        )
+
+post_save.connect(create_dummy_payments, sender=Customer)
