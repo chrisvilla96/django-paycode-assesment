@@ -51,11 +51,10 @@ def create_dummy_payments_signal(sender, instance, **kwargs):
         random_quantity = random.randint(1,20)
 
         PaymentsCustomer.objects.create(
-            product_name=payment,
+            product_name=f"Pago {payment}",
             amount=random_amount,
             quantity=random_quantity,
             customer=customer
         )
-
 
 post_save.connect(create_dummy_payments_signal, sender=Customer)
