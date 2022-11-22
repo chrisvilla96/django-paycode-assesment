@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views.generic import ListView, TemplateView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse
 
 from .models import Customer, PaymentsCustomer
@@ -37,11 +37,32 @@ class CustomerDetailView(LoginRequiredMixin, DetailView):
 
 
 class CustomerCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
-    """Viewfor creating Customers"""
+    """View for creating Customers"""
 
     permission_required = 'core.add_customer'
 
-    template_name = 'customer-create.html'
+    template_name = 'customer/customer-create.html'
     model = Customer
     fields = ['name', 'paternal_surname', 'email']
+    success_url = '/index/'
+
+
+class CustomerUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    """View for editing Customers"""
+
+    permission_required = 'core.change_customer'
+
+    template_name = 'customer/customer-edit.html'
+    model = Customer
+    fields = ['name', 'paternal_surname', 'email']
+    success_url = '/index/'
+
+
+class CustomerDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    """View for deleting Customer"""
+
+    permission_required = 'core.delete_customer'
+
+    template_name = 'customer/customer-delete.html'
+    model = Customer
     success_url = '/index/'

@@ -15,13 +15,6 @@ class Customer(models.Model):
     def __str__(self):
         return self.name
 
-    class Meta:
-        permissions = [
-            ('can_add_customer', 'can add customer'),
-            ('can_edit_customer', 'can edit customer propperties'),
-            ('can_delete_customer', 'can delete customer'),
-        ]
-
 
 class PaymentsCustomer(models.Model):
     """A model for Payments Table"""
@@ -34,12 +27,6 @@ class PaymentsCustomer(models.Model):
 
     def __str__(self):
         return self.product_name
-
-    class Meta:
-        permissions = [
-            ('can_edit_payment', 'can edit payment propperties'),
-            ('can_delete_payment', 'can delete payment'),
-        ]
 
 
 def create_dummy_payments_signal(sender, instance, **kwargs):

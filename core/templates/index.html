@@ -12,7 +12,12 @@
             {% for customer in customer_list %}
             <li>
                 <a href="{% url 'customer-detail' customer.id %}">{{ customer }}</a>
-                <a href="{% url 'customer-update' customer.id %}">Editar</a>
+                {% if perms.core.change_customer %}
+                    <a href="{% url 'customer-update' customer.id %}">Editar</a>
+                {% endif %}
+                {% if perms.core.delete_customer %}
+                    <a href="{% url 'customer-delete' customer.id %}">Eliminar</a>
+                {% endif %}
             </li>
             {% endfor %}
         </ul>
