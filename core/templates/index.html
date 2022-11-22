@@ -3,13 +3,16 @@
 {% block main_content %}
     <h1>Customer List</h1>
 
-    <a href="{% url 'create-customer' %}">Crear Cliente</a>
+    {% if perms.core.add_customer %}
+        <a href="{% url 'customer-create' %}">Crear Cliente</a>
+    {% endif %}
 
     {% if customer_list %}
         <ul>
             {% for customer in customer_list %}
             <li>
                 <a href="{% url 'customer-detail' customer.id %}">{{ customer }}</a>
+                <a href="{% url 'customer-update' customer.id %}">Editar</a>
             </li>
             {% endfor %}
         </ul>
