@@ -1,16 +1,60 @@
 {% extends 'base.html' %}
+{% load humanize %}
 
 {% block main_content %}
 
-    <h1>{{ object.name }}</h1>
-    <h1>{{ object.paternal_surname }}</h1>
+<div class="container grid px-6 mx-auto">
+    <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+        Pagos de {{ object.name }} {{ object.paternal_surname }}
+    </h2>
 
-    {% if payments %}
-        {% for payment in payments %}
-            <p>{{ payment.product_name }}</p>
-        {% endfor %}
-    {% else %}
-        <h1>No hay pagos</h1>
-    {% endif %}
+
+
+    <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
+        <a href="{% url 'index' %}">
+            <i class="fa-sharp fa-solid fa-arrow-left"></i>
+            Atras
+        </a>
+    </h4>
+    <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">Descripción</h4>
+    <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
+        <div class="w-full overflow-x-auto">
+            <table class="w-full whitespace-no-wrap">
+                <thead>
+                    <tr
+                        class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                        <th class="px-4 py-3">Producto</th>
+                        <th class="px-4 py-3">Costo</th>
+                        <th class="px-4 py-3">Cantidad</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+
+                {% if payments %}
+                    {% for payment in payments %}
+                        <tr class="text-gray-700 dark:text-gray-400">
+                            <td class="px-4 py-3">
+                                <div class="flex items-center text-sm">
+
+                                    <div>
+                                        <p class="font-semibold">{{ payment.product_name }}</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-4 py-3 text-sm">$ {{ payment.amount|intcomma }}</td>
+                            <td class="px-4 py-3 text-xs">{{ payment.quantity }}</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                        <h1 class="text-6xl font-semibold text-gray-700 dark:text-gray-200">Este cliente no tiene pagos por el momento</h1>
+                {% endif %}
+                    
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    </div>
+</div>
 
 {% endblock %}
