@@ -6,11 +6,10 @@ from django.urls import reverse
 
 from .models import Customer
 
-class HomeView(LoginRequiredMixin, TemplateView):
+class HomeView(TemplateView):
     """View for Home"""
 
     template_name = 'home.html'
-    login_url = '/login/'
 
 
 class IndexView(LoginRequiredMixin, ListView):
