@@ -1,8 +1,24 @@
 {% extends 'base.html' %}
 
 {% block main_content %}
-    <h1>Bienvenido al Home</h1>
-    <p>Favor de iniciar sesión</p>
 
-    <a href="{% url 'login' %}">Iniciar sesión</a>
+    <div class="max-w-2xl px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+        <p class="mb-4 text-gray-600 dark:text-gray-400">
+            <strong>Bienvenido a PayAPI</strong>
+        </p>
+        <p class="mb-4 text-gray-600 dark:text-gray-400">
+            <strong>Favor de Iniciar Sesión</strong>
+        </p>
+    </div>
+
+    <a
+        href="{% url 'login' %}"
+        class="px-10 py-4 font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+        Iniciar Sesión
+    </a>
+    <a  
+        href="{% url 'register' %}"
+        class="px-10 py-4 font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+        Registrarse
+    </a>
 {% endblock %}

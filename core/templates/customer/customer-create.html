@@ -3,10 +3,23 @@
 {% block main_content %}
     <h1>Crear un Customer</h1>
 
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Submit</button>
-    </form>
+    <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+        <form method="POST">
+            {% csrf_token %}
+
+            {% for field in form %}
+                    <label class="block text-sm">
+                        <span class="text-gray-700 dark:text-gray-400">{{ field.label_tag }}</span>
+                        {{ field }}
+                    </label>
+                    <br>
+            {% endfor %}
+
+            <button 
+                class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" 
+                type="submit">
+                Submit
+            </button>
+        </form>
 
 {% endblock %}
