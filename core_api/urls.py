@@ -2,7 +2,6 @@ from rest_framework import routers
 from django.urls import path
 
 from . import views
-from . import api
 
 urlpatterns = [
     path('customers/', views.CustomerList.as_view()),
